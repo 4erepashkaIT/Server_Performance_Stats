@@ -7,7 +7,10 @@ print_header() {
 
 cpu_usage() {
     print_header "CPU usage"
-    vmstat 1 2 | tail -n 1 | awk '{print "Total CPU usage: " 100 - $15 "%"}'
+    vmstat 1 2 | tail -n 1 | awk '{
+        printf "Total CPU usage: %d%%\n", 100 - $15 - $16
+        printf "I/O wait: %d%%\n", $16
+    }'
 }
 
 memory_usage() {
